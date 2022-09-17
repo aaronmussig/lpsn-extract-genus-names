@@ -43,12 +43,17 @@ def parse_url(url, file_prefix):
     with open(f'{file_prefix}_all.tsv', 'w') as f_all, \
             open(f'{file_prefix}_unq.tsv', 'w') as f_unq, \
             open(f'{file_prefix}_count.tsv', 'w') as f_count, \
-            open(f'{file_prefix}_count_unq.tsv', 'w') as f_count_unq:
+            open(f'{file_prefix}_count_unq.tsv', 'w') as f_count_unq, \
+            open(f'{file_prefix}_word_cloud.txt', 'w') as f_word_cloud, \
+            open(f'{file_prefix}_word_cloud_unq.txt', 'w') as f_word_cloud_unq:
         for name, list_names in out.items():
 
             # All names
             for set_name in list_names:
                 f_all.write(f'{name}\t{set_name}\n')
+
+            all_names_list = '\n'.join([name for _ in range(len(list_names))])
+            f_word_cloud.write(f'{all_names_list}\n')
 
             # All names count
             f_count.write(f'{name}\t{len(list_names)}\n')
@@ -65,6 +70,8 @@ def parse_url(url, file_prefix):
 
             # Unique name count
             f_count_unq.write(f'{name}\t{len(unq_names)}\n')
+            unq_names_list = '\n'.join([name for _ in range(len(unq_names))])
+            f_word_cloud_unq.write(f'{unq_names_list}\n')
     return
 
 
